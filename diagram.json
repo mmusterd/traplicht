@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "author": "Mike Musterd",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-nano", "id": "uno", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-pir-motion-sensor", "id": "pirup", "top": 0.2, "left": 364.57, "attrs": {} },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "pirdown",
+      "top": 1850.5,
+      "left": 401.61,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-neopixel-canvas",
+      "id": "ring2",
+      "top": 621.5,
+      "left": -324.5,
+      "attrs": { "rows": "20", "cols": "140", "matrixBrightness": "2.5" }
+    }
+  ],
+  "connections": [
+    [ "uno:GND.1", "neopixels:VSS", "black", [ "v0", "*", "v16" ] ],
+    [ "uno:3", "neopixels:DIN", "green", [ "v-16", "*", "v8" ] ],
+    [ "uno:5V", "neopixels:VDD", "red", [ "v20", "h-95", "*", "v8" ] ],
+    [ "uno:GND.2", "pirup:GND", "black", [ "v0" ] ],
+    [ "uno:GND.2", "pirdown:GND", "black", [ "v0" ] ],
+    [ "uno:GND.2", "ring2:GND", "black", [ "v0" ] ],
+    [ "pirup:VCC", "uno:VIN", "red", [ "v0" ] ],
+    [ "pirdown:VCC", "uno:VIN", "red", [ "v0" ] ],
+    [ "uno:VIN", "ring2:VCC", "red", [ "v0" ] ],
+    [ "uno:2", "pirdown:OUT", "green", [ "v0" ] ],
+    [ "uno:3", "pirup:OUT", "green", [ "v0" ] ],
+    [ "uno:6", "ring2:DIN", "green", [ "v0" ] ]
+  ],
+  "serialMonitor": { "display": "always", "newline": "lf" }
+}
