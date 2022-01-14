@@ -15,11 +15,36 @@ If you happen to be faster than the light, then this results in a 'party mode'
 
 # How it works
 
+Basically the Looplicht class is responsible for generating the random color at 
+begin and increasing to the end, waiting, and then clearing the random color.
+It is subclassed to redefine top as begin and bottom as end or vice versa.  
+It contains a simple state machine that is always followed in sequence
 ```puml
 @startuml
-Sensor --* Looplicht
+(*) -> Waiting
+Waiting -> Filling
+Filling -> TurnedOn
+TurnedOn -> FadingOut
+FadingOut -> Waiting
+@enduml
+```
+
+The Sensor class is responsible for sending a single trigger if it is armed and detects
+movement. The sensor I used is the HC-SR505 which does not have any means of
+setting the trigger time, so this was wrapped in a class that creates the single
+trigger.
+
+```puml
+@startuml
 Looplicht <|-- Downlooplicht
 Looplicht <|-- Uplooplicht
+Looplicht *- Sensor
+Sensor *- Pin
 
 @enduml
 ```
+
+Finally in the traplicht.ino two digital in pins are bound to two instances of 
+sensor. Each Sensor is then coupled to a subclassed Looplicht, and in the loop
+function the addition is done for all sensors.
+
